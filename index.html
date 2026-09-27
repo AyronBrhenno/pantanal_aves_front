@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário de Aves do Pantanal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="topbar">
+        <div class="topbar-content">
+            <span class="logo" aria-hidden="true">🦜</span>
+            <div>
+                <h1>Diário de Aves do Pantanal</h1>
+                <p class="subtitle">Catalogue espécies e registre avistamentos de campo</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Painel de estatísticas gerais -->
+    <section class="dashboard" aria-label="Estatísticas gerais">
+        <div class="stat-card">
+            <span class="stat-value" id="statEspecies">–</span>
+            <span class="stat-label">espécies catalogadas</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="statAvistamentos">–</span>
+            <span class="stat-label">avistamentos registrados</span>
+        </div>
+        <div class="stat-card highlight">
+            <span class="stat-value" id="statDestaque">–</span>
+            <span class="stat-label">espécie mais avistada</span>
+        </div>
+    </section>
+
+    <main class="content">
+        <!-- Painel lateral: cadastro e busca -->
+        <aside class="panel">
+            <h2>Nova espécie</h2>
+            <form id="formEspecie">
+                <label>Nome popular
+                    <input type="text" id="inputNomePopular" placeholder="Ex: Tuiuiú" required>
+                </label>
+                <label>Nome científico
+                    <input type="text" id="inputNomeCientifico" placeholder="Ex: Jabiru mycteria">
+                </label>
+                <label>Família
+                    <input type="text" id="inputFamilia" placeholder="Ex: Ciconiidae">
+                </label>
+                <label>Status de conservação
+                    <select id="inputStatus">
+                        <option>Não avaliado</option>
+                        <option>Pouco preocupante</option>
+                        <option>Quase ameaçada</option>
+                        <option>Vulnerável</option>
+                        <option>Em perigo</option>
+                    </select>
+                </label>
+                <button type="submit" class="btn-primary">Cadastrar espécie</button>
+            </form>
+
+            <h2>Buscar espécie</h2>
+            <div class="search-box">
+                <input type="text" id="inputBusca" placeholder="Nome popular exato...">
+                <div class="search-actions">
+                    <button id="btnBuscar" class="btn-secondary">Buscar</button>
+                    <button id="btnLimparBusca" class="btn-link" type="button">limpar</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Grade de cards com as espécies cadastradas -->
+        <section class="grid" id="gridEspecies" aria-label="Espécies cadastradas">
+            <p class="empty">Carregando espécies...</p>
+        </section>
+    </main>
+
+    <!-- Modal para registrar um avistamento -->
+    <dialog id="modalAvistamento">
+        <form id="formAvistamento">
+            <h2>Registrar avistamento — <span id="modalEspecieNome"></span></h2>
+
+            <label>Local
+                <input type="text" id="inputLocal" placeholder="Ex: Rio Cuiabá, Barão de Melgaço - MT" required>
+            </label>
+            <label>Data do avistamento
+                <input type="text" id="inputData" placeholder="DD/MM/AAAA" required>
+            </label>
+            <label>Observador
+                <input type="text" id="inputObservador" placeholder="Seu nome">
+            </label>
+            <label>Quantidade
+                <input type="number" id="inputQuantidade" min="1" value="1">
+            </label>
+            <label>Condições climáticas
+                <input type="text" id="inputClima" placeholder="Ex: Ensolarado">
+            </label>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="btnCancelarAvistamento">Cancelar</button>
+                <button type="submit" class="btn-primary">Salvar avistamento</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Modelo de card reutilizado via JavaScript -->
+    <template id="cardTemplate">
+        <article class="card">
+            <div class="card-header">
+                <div>
+                    <h3 class="card-nome"></h3>
+                    <p class="card-cientifico"></p>
+                </div>
+                <span class="badge"></span>
+            </div>
+            <p class="card-familia"></p>
+            <p class="card-total"></p>
+            <div class="card-avistamentos" hidden></div>
+            <div class="card-actions">
+                <button class="btn-outline btn-toggle" type="button">Ver avistamentos</button>
+                <button class="btn-outline btn-add" type="button">+ Avistamento</button>
+                <button class="btn-danger btn-remove" type="button">Remover</button>
+            </div>
+        </article>
+    </template>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
